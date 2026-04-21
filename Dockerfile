@@ -1,5 +1,5 @@
 # Biostats终结者 - Production Dockerfile
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 # 设置环境变量
 ENV DEBIAN_FRONTEND=noninteractive \
