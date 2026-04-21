@@ -620,3 +620,8 @@ agent.save_r_code('analysis.R')
 Made with ❤️ by [Your Name]
 
 </div>
+
+## 📐 理论基础
+
+> **Harness理论**：在AI领域，Harness（环境设计）比模型本身更重要。
+> **红杉论点**：从卖工具到卖结果。
