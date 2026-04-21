@@ -27,7 +27,7 @@ statsmodels==0.14.1
 
 # Document Generation
 python-docx==1.1.0
-openpyxl==3.1.2
+openpyxl==3.1.5
 xlrd==2.0.1
 Pillow==10.1.0
 
