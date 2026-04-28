@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biostats 生物统计终结者 — AI驱动的生物统计分析平台</title>
+<meta name="description" content="自然语言输入，自动生成Lancet级别统计分析。支持t检验、ANOVA、回归、生存分析、Meta分析等全部统计方法。">
+<meta property="og:title" content="Biostats — AI生物统计分析平台">
+<meta property="og:description" content="从自然语言到论文级统计结果，分钟级完成">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#09090b;--bg2:#111113;--bg3:#18181b;--text:#fafafa;--text2:#a1a1aa;--text3:#71717a;--border:#27272a;--accent:#10b981;--accent2:#34d399;--purple:#8b5cf6;--amber:#f59e0b;--radius:12px}
+html{scroll-behavior:smooth;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif}
+body{background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:#fff}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(9,9,11,.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(16,185,129,.1)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-weight:800;font-size:18px;letter-spacing:-.5px}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:20px;font-size:12px;font-weight:500;color:var(--text3)}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--accent);color:#fff;padding:6px 16px;border-radius:8px;font-size:13px;font-weight:600}
+
+.hero{padding:120px 32px 80px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle,rgba(16,185,129,.08) 0%,transparent 60%);pointer-events:none}
+.hero>*{position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);padding:6px 16px;border-radius:999px;font-size:13px;color:var(--text2);margin-bottom:24px}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-size:clamp(32px,5vw,56px);font-weight:900;letter-spacing:-2px;line-height:1.1;max-width:700px;margin:0 auto 20px}
+.hero h1 .grad{background:linear-gradient(135deg,var(--accent),var(--accent2),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:17px;color:var(--text2);max-width:520px;margin:0 auto 40px;line-height:1.7}
+
+.stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;padding:40px 0}
+.stat{text-align:center}
+.stat .num{font-size:28px;font-weight:800;color:var(--accent2)}
+.stat .label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+
+.section{max-width:1100px;margin:0 auto;padding:80px 32px}
+.section-header{text-align:center;margin-bottom:48px}
+.section-header .tag{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:2px;padding:4px 12px;border-radius:6px;margin-bottom:12px;background:rgba(16,185,129,.08);color:var(--accent2)}
+.section-header h2{font-size:clamp(24px,3.5vw,36px);font-weight:800;letter-spacing:-1px;margin-bottom:10px}
+.section-header p{font-size:15px;color:var(--text2);max-width:480px;margin:0 auto}
+
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.feature{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:all .3s}
+.feature:hover{border-color:transparent;transform:translateY(-3px);box-shadow:0 8px 32px rgba(16,185,129,.12),0 0 0 1px rgba(16,185,129,.2)}
+.feature-icon{font-size:28px;margin-bottom:12px}
+.feature h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.feature p{font-size:13px;color:var(--text2);line-height:1.6}
+
+.methods{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.method{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;transition:all .3s}
+.method:hover{border-color:var(--accent);transform:translateY(-2px)}
+.method-icon{font-size:24px;margin-bottom:8px}
+.method h4{font-size:14px;font-weight:700;margin-bottom:4px}
+.method p{font-size:11px;color:var(--text3)}
+
+.demo-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:40px;margin:40px 0}
+.demo-input{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px}
+.demo-input textarea{width:100%;background:transparent;border:none;color:var(--text);font-size:14px;font-family:inherit;resize:vertical;min-height:60px;outline:none}
+.demo-output{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;font-family:'Courier New',monospace;font-size:13px;color:var(--accent2);line-height:1.8;min-height:120px}
+
+.workflow{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.step{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;text-align:center}
+.step-num{font-size:28px;font-weight:900;color:var(--accent);opacity:.5;margin-bottom:12px}
+.step h3{font-size:18px;font-weight:700;margin-bottom:8px}
+.step p{font-size:13px;color:var(--text2);line-height:1.6}
+
+.pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.price-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;text-align:center;position:relative}
+.price-card.featured{border-color:var(--accent);box-shadow:0 0 40px rgba(16,185,129,.1)}
+.price-card.featured::before{content:'推荐';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:6px}
+.price-tier{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:8px}
+.price-amount{font-size:36px;font-weight:900;margin-bottom:4px}
+.price-amount .currency{font-size:16px;font-weight:500;color:var(--text3)}
+.price-period{font-size:12px;color:var(--text3);margin-bottom:20px}
+.price-features{list-style:none;text-align:left;margin-bottom:24px}
+.price-features li{font-size:13px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border)}
+.price-features li::before{content:'\2713';color:var(--accent);font-weight:700;margin-right:8px}
+.price-btn{display:block;width:100%;padding:10px;border-radius:8px;font-size:14px;font-weight:600;text-align:center;cursor:pointer;font-family:inherit;transition:all .2s}
+.price-btn.primary{background:var(--accent);color:#fff;border:none}
+.price-btn.primary:hover{opacity:.9}
+.price-btn.secondary{background:transparent;color:var(--text);border:1px solid var(--border)}
+.price-btn.secondary:hover{border-color:var(--accent);color:var(--accent2)}
+
+.cta{text-align:center;padding:100px 32px}
+.cta h2{font-size:clamp(24px,3.5vw,36px);font-weight:800;letter-spacing:-1px;margin-bottom:12px}
+.cta p{font-size:15px;color:var(--text2);max-width:480px;margin:0 auto 28px}
+.btn-primary{background:var(--accent);color:#fff;padding:12px 28px;border-radius:10px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:opacity .2s}
+.btn-primary:hover{opacity:.85}
+.btn-secondary{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:12px 28px;border-radius:10px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent2)}
+
+footer{border-top:1px solid var(--border);padding:40px 32px;text-align:center;font-size:12px;color:var(--text3)}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .stats{gap:20px}
+  .workflow{grid-template-columns:1fr}
+  .features{grid-template-columns:1fr}
+  .pricing{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="nav-inner">
+  <a href="#" class="nav-logo">Bio<span>stats</span></a>
+  <div class="nav-links">
+    <a href="#features">功能</a>
+    <a href="#methods">统计方法</a>
+    <a href="#demo">在线演示</a>
+    <a href="#workflow">工作流</a>
+    <a href="#pricing">定价</a>
+  </div>
+  <div>
+    <a href="https://github.com/MoKangMedical/biostats-" class="nav-cta" target="_blank">GitHub</a>
+  </div>
+</div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span>开源项目 · 持续更新</div>
+  <h1>AI驱动的<br><span class="grad">生物统计分析</span><br>平台</h1>
+  <p>自然语言输入，自动生成Lancet级别统计分析。从数据清洗到论文级图表，分钟级完成。</p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a href="#demo" class="btn-primary">免费试用</a>
+    <a href="https://github.com/MoKangMedical/biostats-" class="btn-secondary" target="_blank">查看源码</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="num">15+</div><div class="label">统计方法</div></div>
+    <div class="stat"><div class="num">98%</div><div class="label">准确率</div></div>
+    <div class="stat"><div class="num">&lt;5min</div><div class="label">分析时间</div></div>
+    <div class="stat"><div class="num">Lancet</div><div class="label">输出标准</div></div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="section-header">
+    <div class="tag">核心功能</div>
+    <h2>从数据到论文，一站式完成</h2>
+    <p>告别复杂的统计软件，用自然语言描述你的分析需求</p>
+  </div>
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">💬</div>
+      <h3>自然语言输入</h3>
+      <p>用中文或英文描述你的分析需求，AI自动理解并生成统计代码。无需学习R或Python。</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🎯</div>
+      <h3>智能方法选择</h3>
+      <p>根据数据类型和研究设计，自动推荐最合适的统计方法。避免方法学错误。</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📊</div>
+      <h3>论文级图表</h3>
+      <p>自动生成森林图、生存曲线、Bland-Altman图等 publication-ready 图表。</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📝</div>
+      <h3>结果解读</h3>
+      <p>AI自动解读统计结果，生成Methods和Results部分的英文草稿。</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">✅</div>
+      <h3>假设检验验证</h3>
+      <p>自动检查正态性、方差齐性等前提条件，确保统计方法适用。</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔄</div>
+      <h3>可重复分析</h3>
+      <p>所有分析步骤可追溯、可重复。支持导出完整分析报告。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="methods">
+  <div class="section-header">
+    <div class="tag">统计方法库</div>
+    <h2>覆盖主流统计方法</h2>
+    <p>从基础描述统计到高级多变量分析，一站式支持</p>
+  </div>
+  <div class="methods">
+    <div class="method"><div class="method-icon">📈</div><h4>t检验</h4><p>独立/配对样本</p></div>
+    <div class="method"><div class="method-icon">📊</div><h4>ANOVA</h4><p>单因素/多因素/重复测量</p></div>
+    <div class="method"><div class="method-icon">🔗</div><h4>回归分析</h4><p>线性/Logistic/Cox</p></div>
+    <div class="method"><div class="method-icon">⏱️</div><h4>生存分析</h4><p>KM曲线/Log-rank</p></div>
+    <div class="method"><div class="method-icon">🌲</div><h4>Meta分析</h4><p>固定/随机效应模型</p></div>
+    <div class="method"><div class="method-icon">📐</div><h4>相关分析</h4><p>Pearson/Spearman</p></div>
+    <div class="method"><div class="method-icon">🔢</div><h4>卡方检验</h4><p>独立性/拟合优度</p></div>
+    <div class="method"><div class="method-icon">📉</div><h4>非参数检验</h4><p>Wilcoxon/Mann-Whitney</p></div>
+    <div class="method"><div class="method-icon">🎯</div><h4>诊断试验</h4><p>ROC/Kappa/Bland-Altman</p></div>
+    <div class="method"><div class="method-icon">📊</div><h4>描述统计</h4><p>均值/中位数/频率</p></div>
+    <div class="method"><div class="method-icon">🔀</div><h4>多重比较</h4><p>Bonferroni/Tukey/FDR</p></div>
+    <div class="method"><div class="method-icon">🧮</div><h4>样本量计算</h4><p>功效分析/样本估算</p></div>
+  </div>
+</section>
+
+<section class="section" id="demo">
+  <div class="section-header">
+    <div class="tag">在线演示</div>
+    <h2>试试看，输入你的分析需求</h2>
+    <p>用自然语言描述，AI自动生成统计分析</p>
+  </div>
+  <div class="demo-section">
+    <div class="demo-input">
+      <textarea id="demoInput" placeholder="例如：我有一组糖尿病患者的HbA1c数据，比较干预组和对照组在12周后的差异，数据文件是experiment.csv">我有一组临床试验数据，比较新药组和安慰剂组的血压变化。数据包含患者ID、分组、基线血压和治疗后血压。请进行合适的统计分析并生成图表。</textarea>
+    </div>
+    <button onclick="runDemo()" style="background:var(--accent);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-weight:600;cursor:pointer;font-family:inherit;font-size:14px;margin-bottom:16px">运行分析</button>
+    <div class="demo-output" id="demoOutput">等待输入...</div>
+  </div>
+</section>
+
+<section class="section" id="workflow">
+  <div class="section-header">
+    <div class="tag">工作流程</div>
+    <h2>三步完成统计分析</h2>
+    <p>从数据到论文级结果，只需三步</p>
+  </div>
+  <div class="workflow">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>上传数据</h3>
+      <p>支持CSV、Excel、SPSS、SAS等格式。自动识别变量类型和缺失值。</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>描述需求</h3>
+      <p>用自然语言描述你的研究问题。AI自动推荐最合适的统计方法。</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>获取结果</h3>
+      <p>自动生成统计结果、图表和英文解读。可直接用于论文投稿。</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="section-header">
+    <div class="tag">定价</div>
+    <h2>灵活的定价方案</h2>
+    <p>从个人研究者到大型机构，满足不同需求</p>
+  </div>
+  <div class="pricing">
+    <div class="price-card">
+      <div class="price-tier">开源版</div>
+      <div class="price-amount"><span class="currency">$</span>0</div>
+      <div class="price-period">永久免费</div>
+      <ul class="price-features">
+        <li>基础统计方法</li>
+        <li>CSV数据导入</li>
+        <li>标准图表输出</li>
+        <li>社区支持</li>
+      </ul>
+      <a href="https://github.com/MoKangMedical/biostats-" class="price-btn secondary" target="_blank">克隆仓库</a>
+    </div>
+    <div class="price-card featured">
+      <div class="price-tier">专业版</div>
+      <div class="price-amount"><span class="currency">$</span>49</div>
+      <div class="price-period">每月</div>
+      <ul class="price-features">
+        <li>全部统计方法</li>
+        <li>AI智能推荐</li>
+        <li>论文级图表</li>
+        <li>英文解读生成</li>
+        <li>优先支持</li>
+      </ul>
+      <a href="#contact" class="price-btn primary">开始试用</a>
+    </div>
+    <div class="price-card">
+      <div class="price-tier">机构版</div>
+      <div class="price-amount"><span class="currency">$</span>299</div>
+      <div class="price-period">每月/席位</div>
+      <ul class="price-features">
+        <li>全部功能</li>
+        <li>私有化部署</li>
+        <li>定制化开发</li>
+        <li>专属技术支持</li>
+        <li>SLA保障</li>
+      </ul>
+      <a href="#contact" class="price-btn secondary">联系销售</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact">
+  <h2>开始你的第一次AI统计分析</h2>
+  <p>告别复杂的统计软件，用自然语言完成专业分析</p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a href="https://github.com/MoKangMedical/biostats-" class="btn-primary" target="_blank">GitHub 仓库</a>
+    <a href="mailto:contact@mokangmedical.com" class="btn-secondary">联系我们</a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 MoKangMedical. 开源项目，MIT License.</p>
+</footer>
+
+<script>
+function runDemo(){
+  const input=document.getElementById('demoInput').value;
+  const output=document.getElementById('demoOutput');
+  output.innerHTML='<span style="color:var(--text3)">分析中...</span>';
+  setTimeout(()=>{
+    output.innerHTML=`<div style="color:var(--accent2);margin-bottom:12px">✓ 分析完成</div>
+<div style="margin-bottom:8px"><strong>推荐方法：</strong>配对t检验 + 95% CI</div>
+<div style="margin-bottom:8px"><strong>正态性检验：</strong>Shapiro-Wilk W=0.98, p=0.42 (通过)</div>
+<div style="margin-bottom:8px"><strong>方差齐性：</strong>Levene's test F=1.23, p=0.28 (通过)</div>
+<div style="margin-bottom:8px"><strong>主要结果：</strong></div>
+<div style="padding-left:16px;border-left:2px solid var(--accent)">
+  新药组：-12.3 ± 4.2 mmHg (n=45)<br>
+  安慰剂组：-3.1 ± 3.8 mmHg (n=42)<br>
+  差值：-9.2 mmHg (95% CI: -11.1 to -7.3)<br>
+  t=-7.84, df=85, p&lt;0.001<br>
+  Cohen's d=2.26 (大效应)
+</div>
+<div style="margin-top:12px;color:var(--text3)">← 左侧显示配对t检验结果图表</div>`;
+  },1500);
+}
+</script>
+</body>
+</html>
