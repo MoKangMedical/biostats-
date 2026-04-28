@@ -32,7 +32,7 @@ xlrd==2.0.1
 Pillow==10.1.0
 
 # Task Queue
-celery==5.3.4
+celery==5.6.3
 redis==5.0.1
 
 # Environment & Config
