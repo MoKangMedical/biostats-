@@ -49,7 +49,7 @@ Flask-Mail==0.9.1
 
 # Monitoring & Logging
 sentry-sdk[flask]==1.39.1
-python-json-logger==2.0.7
+python-json-logger==4.1.0
 
 # Utilities
 requests==2.31.0
