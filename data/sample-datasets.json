@@ -1,0 +1,102 @@
+[
+  {
+    "id": "survival-lung",
+    "name": "肺癌生存数据",
+    "description": "晚期非小细胞肺癌患者随机对照试验生存数据，比较化疗vs免疫治疗",
+    "type": "生存分析",
+    "n_samples": 350,
+    "endpoint": "总生存期 (OS)",
+    "variables": {
+      "patient_id": "患者编号",
+      "treatment": "治疗组 (chemo/immunotherapy)",
+      "survival_time": "生存时间（月）",
+      "event": "事件指示 (1=死亡, 0=删失)",
+      "age": "年龄",
+      "gender": "性别 (M/F)",
+      "stage": "分期 (IIIA/IIIB/IV)",
+      "ecog": "ECOG评分 (0-2)",
+      "pd_l1": "PD-L1表达 (%)"
+    },
+    "source": "模拟数据（基于KEYNOTE-024试验设计）",
+    "suggested_methods": ["Kaplan-Meier", "Cox PH", "Log-rank test"]
+  },
+  {
+    "id": "rct-hypertension",
+    "name": "降压药RCT数据",
+    "description": "新型降压药vs标准治疗的随机双盲对照试验数据",
+    "type": "连续变量",
+    "n_samples": 200,
+    "endpoint": "收缩压变化 (mmHg)",
+    "variables": {
+      "patient_id": "患者编号",
+      "treatment": "治疗组 (new_drug/standard)",
+      "sbp_baseline": "基线收缩压",
+      "sbp_week12": "12周收缩压",
+      "sbp_change": "收缩压变化值",
+      "age": "年龄",
+      "bmi": "BMI",
+      "diabetes": "合并糖尿病 (0/1)",
+      "ckd_stage": "CKD分期 (1-3)"
+    },
+    "source": "模拟数据",
+    "suggested_methods": ["t-test", "ANCOVA", "混合效应模型"]
+  },
+  {
+    "id": "phase2-oncology",
+    "name": "II期肿瘤试验数据",
+    "description": "单臂II期肿瘤临床试验，评估客观缓解率(ORR)",
+    "type": "二分类变量",
+    "n_samples": 80,
+    "endpoint": "客观缓解率 (CR+PR)",
+    "variables": {
+      "patient_id": "患者编号",
+      "response": "缓解 (CR/PR/SD/PD)",
+      "binary_response": "有效 (1=CR+PR, 0=SD+PD)",
+      "cycles": "治疗周期数",
+      "dose_level": "剂量水平 (1-3)",
+      "prior_lines": "既往治疗线数",
+      "biomarker": "生物标志物状态 (+/-)"
+    },
+    "source": "模拟数据",
+    "suggested_methods": ["单样本比例检验", "Fisher精确检验", "Simon两阶段设计"]
+  },
+  {
+    "id": "diagnostic-accuracy",
+    "name": "诊断试验准确性数据",
+    "description": "新型生物标志物诊断试验，评估敏感度和特异度",
+    "type": "诊断试验",
+    "n_samples": 500,
+    "endpoint": "诊断准确性",
+    "variables": {
+      "patient_id": "患者编号",
+      "gold_standard": "金标准诊断 (0/1)",
+      "biomarker_value": "生物标志物连续值",
+      "test_positive": "检测阳性 (0/1)",
+      "age": "年龄",
+      "gender": "性别",
+      "disease_stage": "疾病分期"
+    },
+    "source": "模拟数据",
+    "suggested_methods": ["ROC曲线", "敏感度/特异度", "PPV/NPV", "Youden指数"]
+  },
+  {
+    "id": "longitudinal-cognition",
+    "name": "纵向认知功能数据",
+    "description": "阿尔茨海默病药物试验中认知功能的纵向追踪数据",
+    "type": "纵向数据",
+    "n_samples": 300,
+    "endpoint": "ADAS-Cog评分变化",
+    "variables": {
+      "patient_id": "患者编号",
+      "treatment": "治疗组 (drug/placebo)",
+      "visit": "访视时间 (0/3/6/12/18/24月)",
+      "adas_cog": "ADAS-Cog评分",
+      "age": "基线年龄",
+      "apoe4": "APOE4携带状态 (0/1)",
+      "baseline_mmse": "基线MMSE评分",
+      "education_years": "受教育年限"
+    },
+    "source": "模拟数据（基于ADAS-Cog量表）",
+    "suggested_methods": ["混合效应模型", "GEE", "重复测量ANOVA"]
+  }
+]

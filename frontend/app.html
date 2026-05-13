@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biostats - 在线统计分析平台</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0e1a;--card:#111827;--border:#1f2937;--text:#e5e7eb;--dim:#6b7280;--cyan:#06b6d4;--purple:#8b5cf6;--green:#10b981;--red:#ef4444}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
+.container{max-width:1200px;margin:0 auto;padding:20px}
+header{text-align:center;padding:40px 20px;background:linear-gradient(135deg,#06b6d4,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+header h1{font-size:2.5rem;font-weight:800}
+header p{color:var(--dim);font-size:1.1rem;margin-top:10px;-webkit-text-fill-color:var(--dim)}
+.tabs{display:flex;gap:10px;margin:30px 0;flex-wrap:wrap;justify-content:center}
+.tab{padding:10px 20px;background:var(--card);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .3s;color:var(--text)}
+.tab:hover,.tab.active{border-color:var(--cyan);background:rgba(6,182,212,0.1)}
+.panel{display:none;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:30px;margin-bottom:20px}
+.panel.active{display:block}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;margin-bottom:8px;color:var(--dim);font-size:.9rem}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:1rem}
+.form-group textarea{min-height:100px;font-family:'JetBrains Mono',monospace;font-size:.85rem}
+.btn{padding:12px 24px;background:linear-gradient(135deg,#06b6d4,#8b5cf6);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;transition:all .3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(6,182,212,0.3)}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+.result{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:20px;margin-top:20px;white-space:pre-wrap;font-family:'JetBrains Mono',monospace;font-size:.85rem;line-height:1.6}
+.result img{max-width:100%;border-radius:8px;margin-top:10px}
+.loading{display:none;color:var(--cyan)}
+.loading.show{display:inline-block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+@media(max-width:768px){.container{padding:10px}header h1{font-size:1.8rem}.panel{padding:20px}}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>Biostats</h1>
+<p>AI驱动的在线统计分析平台 - 上传数据，即时获得专业分析结果</p>
+</header>
+
+<div class="tabs">
+<div class="tab active" onclick="switchTab('survival')">生存分析</div>
+<div class="tab" onclick="switchTab('sample')">样本量计算</div>
+<div class="tab" onclick="switchTab('ttest')">t检验</div>
+<div class="tab" onclick="switchTab('meta')">Meta分析</div>
+<div class="tab" onclick="switchTab('bayesian')">贝叶斯分析</div>
+</div>
+
+<!-- 生存分析 -->
+<div class="panel active" id="panel-survival">
+<h2 style="margin-bottom:20px">Kaplan-Meier 生存分析</h2>
+<div class="form-group">
+<label>时间数据（逗号分隔）</label>
+<input type="text" id="survival-time" value="3,6,9,12,15,18,21,24" placeholder="例: 3,6,9,12,15,18,21,24">
+</div>
+<div class="form-group">
+<label>事件指示（1=事件发生，0=删失）</label>
+<input type="text" id="survival-event" value="1,0,1,1,0,1,0,1" placeholder="例: 1,0,1,1,0,1,0,1">
+</div>
+<button class="btn" onclick="runSurvival()">运行分析</button>
+<button class="btn" onclick="visualizeSurvival()" style="margin-left:10px;background:linear-gradient(135deg,#10b981,#06b6d4)">生成图表</button>
+<div class="loading" id="loading-survival">分析中...</div>
+<div class="result" id="result-survival"></div>
+</div>
+
+<!-- 样本量计算 -->
+<div class="panel" id="panel-sample">
+<h2 style="margin-bottom:20px">样本量计算</h2>
+<div class="grid">
+<div class="form-group">
+<label>终点类型</label>
+<select id="sample-endpoint">
+<option value="continuous">连续变量（均值比较）</option>
+<option value="binary">二分类变量（比例比较）</option>
+<option value="survival">生存变量</option>
+</select>
+</div>
+<div class="form-group">
+<label>显著性水平 (α)</label>
+<input type="number" id="sample-alpha" value="0.05" step="0.01">
+</div>
+<div class="form-group">
+<label>检验效能 (1-β)</label>
+<input type="number" id="sample-power" value="0.80" step="0.05">
+</div>
+</div>
+<div id="sample-params">
+<div class="grid">
+<div class="form-group">
+<label>组1均值</label>
+<input type="number" id="sample-mean1" value="50">
+</div>
+<div class="form-group">
+<label>组2均值</label>
+<input type="number" id="sample-mean2" value="55">
+</div>
+<div class="form-group">
+<label>标准差</label>
+<input type="number" id="sample-sd" value="10">
+</div>
+</div>
+</div>
+<button class="btn" onclick="runSampleSize()">计算样本量</button>
+<div class="loading" id="loading-sample">计算中...</div>
+<div class="result" id="result-sample"></div>
+</div>
+
+<!-- t检验 -->
+<div class="panel" id="panel-ttest">
+<h2 style="margin-bottom:20px">两样本 t 检验</h2>
+<div class="form-group">
+<label>组1数据（逗号分隔）</label>
+<textarea id="ttest-group1">23,25,28,30,32,35,38,40,42,45</textarea>
+</div>
+<div class="form-group">
+<label>组2数据（逗号分隔）</label>
+<textarea id="ttest-group2">18,20,22,25,28,30,32,35,38,40</textarea>
+</div>
+<button class="btn" onclick="runTTest()">运行 t 检验</button>
+<div class="loading" id="loading-ttest">分析中...</div>
+<div class="result" id="result-ttest"></div>
+</div>
+
+<!-- Meta分析 -->
+<div class="panel" id="panel-meta">
+<h2 style="margin-bottom:20px">Meta 分析</h2>
+<div class="form-group">
+<label>效应量（逗号分隔）</label>
+<textarea id="meta-effects">0.5,0.3,0.8,0.6,0.4</textarea>
+</div>
+<div class="form-group">
+<label>标准误（逗号分隔）</label>
+<textarea id="meta-se">0.1,0.15,0.12,0.08,0.2</textarea>
+</div>
+<button class="btn" onclick="runMeta()">运行 Meta 分析</button>
+<div class="loading" id="loading-meta">分析中...</div>
+<div class="result" id="result-meta"></div>
+</div>
+
+<!-- 贝叶斯分析 -->
+<div class="panel" id="panel-bayesian">
+<h2 style="margin-bottom:20px">Beta-Binomial 贝叶斯分析</h2>
+<div class="grid">
+<div class="form-group">
+<label>成功次数</label>
+<input type="number" id="bayesian-successes" value="45">
+</div>
+<div class="form-group">
+<label>试验次数</label>
+<input type="number" id="bayesian-trials" value="100">
+</div>
+<div class="form-group">
+<label>先验 α</label>
+<input type="number" id="bayesian-prior-alpha" value="1" step="0.1">
+</div>
+<div class="form-group">
+<label>先验 β</label>
+<input type="number" id="bayesian-prior-beta" value="1" step="0.1">
+</div>
+</div>
+<button class="btn" onclick="runBayesian()">运行贝叶斯分析</button>
+<div class="loading" id="loading-bayesian">分析中...</div>
+<div class="result" id="result-bayesian"></div>
+</div>
+
+</div>
+
+<script>
+const API_BASE = 'http://localhost:8002';
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('panel-' + name).classList.add('active');
+}
+
+function parseNumbers(str) {
+  return str.split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+}
+
+async function apiCall(endpoint, data, resultId, loadingId) {
+  const loading = document.getElementById(loadingId);
+  const result = document.getElementById(resultId);
+  loading.classList.add('show');
+  result.innerHTML = '';
+  
+  try {
+    const resp = await fetch(API_BASE + endpoint, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    });
+    const json = await resp.json();
+    
+    if (json.image) {
+      result.innerHTML = '<img src="data:image/png;base64,' + json.image + '">';
+    } else {
+      result.textContent = JSON.stringify(json, null, 2);
+    }
+  } catch (e) {
+    result.textContent = '错误: ' + e.message;
+  }
+  loading.classList.remove('show');
+}
+
+function runSurvival() {
+  apiCall('/api/survival', {
+    time: parseNumbers(document.getElementById('survival-time').value),
+    event: parseNumbers(document.getElementById('survival-event').value)
+  }, 'result-survival', 'loading-survival');
+}
+
+function visualizeSurvival() {
+  apiCall('/api/visualize/survival', {
+    time: parseNumbers(document.getElementById('survival-time').value),
+    event: parseNumbers(document.getElementById('survival-event').value)
+  }, 'result-survival', 'loading-survival');
+}
+
+function runSampleSize() {
+  apiCall('/api/sample-size', {
+    endpoint: document.getElementById('sample-endpoint').value,
+    alpha: parseFloat(document.getElementById('sample-alpha').value),
+    power: parseFloat(document.getElementById('sample-power').value),
+    mean1: parseFloat(document.getElementById('sample-mean1').value),
+    mean2: parseFloat(document.getElementById('sample-mean2').value),
+    sd: parseFloat(document.getElementById('sample-sd').value)
+  }, 'result-sample', 'loading-sample');
+}
+
+function runTTest() {
+  apiCall('/api/t-test', {
+    group1: parseNumbers(document.getElementById('ttest-group1').value),
+    group2: parseNumbers(document.getElementById('ttest-group2').value)
+  }, 'result-ttest', 'loading-ttest');
+}
+
+function runMeta() {
+  apiCall('/api/meta-analysis', {
+    effects: parseNumbers(document.getElementById('meta-effects').value),
+    se: parseNumbers(document.getElementById('meta-se').value)
+  }, 'result-meta', 'loading-meta');
+}
+
+function runBayesian() {
+  apiCall('/api/bayesian', {
+    successes: parseInt(document.getElementById('bayesian-successes').value),
+    trials: parseInt(document.getElementById('bayesian-trials').value),
+    prior_alpha: parseFloat(document.getElementById('bayesian-prior-alpha').value),
+    prior_beta: parseFloat(document.getElementById('bayesian-prior-beta').value)
+  }, 'result-bayesian', 'loading-bayesian');
+}
+</script>
+</body>
+</html>

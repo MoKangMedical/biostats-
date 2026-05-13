@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biostats — AI-Powered Biostatistics Platform</title>
+<meta name="description" content="Clinical trial design, survival analysis, and statistical inference powered by AI. Publication-ready results in minutes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#060a14;--card:#0d1425;--border:#152035;--text:#e8edf5;--dim:#7b8ba4;--cyan:#00e5ff;--purple:#a855f7;--green:#00ffa3;--orange:#ffb800;--grad:linear-gradient(135deg,#00e5ff,#a855f7)}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;background-image:linear-gradient(rgba(0,229,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.015) 1px,transparent 1px);background-size:60px 60px;-webkit-font-smoothing:antialiased}
+.hero{text-align:center;padding:8rem 2rem 6rem;max-width:900px;margin:0 auto}
+.hero h1{font-family:'Orbitron',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1.5rem}
+.hero p{color:var(--dim);font-size:1.15rem;line-height:1.8;max-width:650px;margin:0 auto 2.5rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 2rem;border-radius:12px;font-size:1rem;font-weight:600;text-decoration:none;transition:all .3s;border:none;cursor:pointer}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 0 20px rgba(0,229,255,.2)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(0,229,255,.35)}
+.btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--border)}
+.btn-ghost:hover{border-color:var(--cyan)}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;max-width:1100px;margin:4rem auto;padding:0 2rem}
+.feature{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:all .3s}
+.feature:hover{border-color:rgba(0,229,255,.2);transform:translateY(-3px);box-shadow:0 0 30px rgba(0,229,255,.05)}
+.feature h3{font-size:1.1rem;margin-bottom:.5rem}
+.feature p{color:var(--dim);font-size:.88rem;line-height:1.6}
+.feature .ico{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.3rem}
+.code-block{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem 2rem;max-width:700px;margin:3rem auto;font-family:'JetBrains Mono',monospace;font-size:.85rem;color:var(--green);overflow-x:auto;text-align:left;line-height:1.8}
+.code-block .comment{color:var(--dim)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;max-width:800px;margin:0 auto 3rem}
+.stat-val{font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-lbl{font-size:.82rem;color:var(--dim);margin-top:.2rem}
+
+/* Pricing Section */
+.pricing{max-width:1100px;margin:6rem auto;padding:0 2rem}
+.pricing h2{text-align:center;font-family:'Orbitron',sans-serif;font-size:2rem;margin-bottom:1rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.pricing>p{text-align:center;color:var(--dim);margin-bottom:3rem}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}
+.price-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2.5rem;position:relative;transition:all .3s}
+.price-card:hover{transform:translateY(-5px);box-shadow:0 0 40px rgba(0,229,255,.1)}
+.price-card.popular{border-color:var(--cyan);box-shadow:0 0 30px rgba(0,229,255,.15)}
+.price-card.popular::before{content:'Most Popular';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--grad);color:#fff;padding:4px 16px;border-radius:20px;font-size:.75rem;font-weight:600}
+.price-card h3{font-size:1.3rem;margin-bottom:.5rem}
+.price-card .price{font-family:'Orbitron',sans-serif;font-size:2.5rem;font-weight:800;margin:1rem 0}
+.price-card .price span{font-size:1rem;font-weight:400;color:var(--dim)}
+.price-card .features-list{list-style:none;margin:1.5rem 0}
+.price-card .features-list li{padding:.5rem 0;color:var(--dim);font-size:.9rem;display:flex;align-items:center;gap:.5rem}
+.price-card .features-list li::before{content:'✓';color:var(--green);font-weight:bold}
+.price-card .btn{width:100%;justify-content:center;margin-top:1.5rem}
+
+/* API Section */
+.api-section{max-width:1100px;margin:6rem auto;padding:0 2rem}
+.api-section h2{text-align:center;font-family:'Orbitron',sans-serif;font-size:2rem;margin-bottom:1rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.api-section>p{text-align:center;color:var(--dim);margin-bottom:3rem}
+.api-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem}
+.api-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem}
+.api-card h4{color:var(--cyan);margin-bottom:.5rem;font-size:1rem}
+.api-card p{color:var(--dim);font-size:.85rem;line-height:1.5}
+.api-card .endpoint{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--green);background:rgba(0,255,163,.05);padding:.3rem .6rem;border-radius:6px;margin-top:.5rem;display:inline-block}
+
+/* Workflow Section */
+.workflow{max-width:900px;margin:6rem auto;padding:0 2rem}
+.workflow h2{text-align:center;font-family:'Orbitron',sans-serif;font-size:2rem;margin-bottom:3rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.workflow-steps{display:flex;flex-direction:column;gap:2rem}
+.workflow-step{display:flex;gap:1.5rem;align-items:flex-start}
+.workflow-step .step-num{width:48px;height:48px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-weight:800;font-size:1.2rem;flex-shrink:0}
+.workflow-step .step-content{flex:1}
+.workflow-step h4{margin-bottom:.5rem}
+.workflow-step p{color:var(--dim);font-size:.9rem;line-height:1.6}
+
+footer{text-align:center;padding:4rem 2rem;color:var(--dim);font-size:.85rem}
+footer a{color:var(--cyan);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media(max-width:768px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .pricing-grid{grid-template-columns:1fr}
+  .api-grid{grid-template-columns:1fr}
+  .workflow-step{flex-direction:column;align-items:center;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<div class="hero">
+  <h1>Biostats</h1>
+  <p>AI-Powered Biostatistics Platform. Clinical trial design, survival analysis, and statistical inference — publication-ready results in minutes.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem">
+    <a href="#pricing" class="btn btn-primary">Start Free Trial</a>
+    <a href="#features" class="btn btn-ghost">Explore Features</a>
+  </div>
+  <div class="stats">
+    <div><div class="stat-val">7</div><div class="stat-lbl">Core Modules</div></div>
+    <div><div class="stat-val">50+</div><div class="stat-lbl">Statistical Tests</div></div>
+    <div><div class="stat-val">AI</div><div class="stat-lbl">Interpretation</div></div>
+    <div><div class="stat-val">MIT</div><div class="stat-lbl">Open Source</div></div>
+  </div>
+  <div class="code-block">
+    <span class="comment"># Quick start — 3 lines to results</span><br>
+    from biostats import Survival, TrialDesign, Bayesian<br><br>
+    <span class="comment"># Kaplan-Meier survival curve</span><br>
+    km = Survival.kaplan_meier(time=[3,6,9,12], event=[1,0,1,1])<br>
+    km.plot()  <span class="comment"># Publication-ready figure</span><br>
+    km.summary()  <span class="comment"># AI-generated interpretation</span>
+  </div>
+</div>
+
+<!-- Features Section -->
+<div class="features" id="features">
+  <div class="feature">
+    <div class="ico" style="background:rgba(0,229,255,.08)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00e5ff" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+    </div>
+    <h3>Survival Analysis</h3>
+    <p>Kaplan-Meier, Cox Proportional Hazards, Fine-Gray competing risks. Automatic CI estimation and log-rank tests.</p>
+  </div>
+  <div class="feature">
+    <div class="ico" style="background:rgba(168,85,247,.08)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+    </div>
+    <h3>Trial Design</h3>
+    <p>Sample size calculation, power analysis, adaptive designs. Two-arm, survival, non-inferiority, and more.</p>
+  </div>
+  <div class="feature">
+    <div class="ico" style="background:rgba(0,255,163,.08)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00ffa3" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    </div>
+    <h3>Bayesian Methods</h3>
+    <p>Conjugate priors, posterior estimation, credible intervals, and Bayesian model comparison.</p>
+  </div>
+  <div class="feature">
+    <div class="ico" style="background:rgba(255,184,0,.08)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffb800" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M20.66 8A10 10 0 0 0 12 2v10h10a10 10 0 0 0-1.34-4z"/></svg>
+    </div>
+    <h3>AI Interpretation</h3>
+    <p>Plain-language explanations of statistical results. No stats PhD required to understand your data.</p>
+  </div>
+  <div class="feature">
+    <div class="ico" style="background:rgba(255,45,135,.08)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff2d87" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    </div>
+    <h3>Publication Engine</h3>
+    <p>Auto-generate publication-ready tables and figures in NEJM, Lancet, and JAMA formats.</p>
+  </div>
+  <div class="feature">
+    <div class="ico" style="background:rgba(255,59,92,.08)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff3b5c" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    </div>
+    <h3>Meta-Analysis</h3>
+    <p>Fixed and random effects models, forest plots, heterogeneity assessment, and funnel plots.</p>
+  </div>
+</div>
+
+<!-- Workflow Section -->
+<div class="workflow" id="workflow">
+  <h2>How It Works</h2>
+  <div class="workflow-steps">
+    <div class="workflow-step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Upload Your Data</h4>
+        <p>Drag and drop your CSV, Excel, or SAS files. Our platform automatically detects data types and validates your dataset.</p>
+      </div>
+    </div>
+    <div class="workflow-step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Choose Analysis</h4>
+        <p>Select from 50+ statistical tests. Our AI recommends the best analysis based on your data structure and research questions.</p>
+      </div>
+    </div>
+    <div class="workflow-step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Get Results</h4>
+        <p>Receive publication-ready results in seconds, complete with AI-generated interpretations and professional visualizations.</p>
+      </div>
+    </div>
+    <div class="workflow-step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Export & Publish</h4>
+        <p>Download reports in PDF, Excel, or HTML format. Figures are ready for submission to top medical journals.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- API Section -->
+<div class="api-section" id="api">
+  <h2>Developer API</h2>
+  <p>Integrate Biostats into your workflow with our RESTful API</p>
+  <div class="api-grid">
+    <div class="api-card">
+      <h4>Authentication</h4>
+      <p>Secure JWT-based authentication with API keys for programmatic access.</p>
+      <div class="endpoint">POST /api/v1/auth/login</div>
+    </div>
+    <div class="api-card">
+      <h4>Survival Analysis</h4>
+      <p>Kaplan-Meier, Cox regression, and log-rank tests via API.</p>
+      <div class="endpoint">POST /api/v1/statistics/survival</div>
+    </div>
+    <div class="api-card">
+      <h4>Sample Size</h4>
+      <p>Calculate sample size for means, proportions, and survival endpoints.</p>
+      <div class="endpoint">POST /api/v1/statistics/sample-size</div>
+    </div>
+    <div class="api-card">
+      <h4>Meta-Analysis</h4>
+      <p>Fixed and random effects models with heterogeneity assessment.</p>
+      <div class="endpoint">POST /api/v1/statistics/advanced/meta</div>
+    </div>
+    <div class="api-card">
+      <h4>Visualization</h4>
+      <p>Generate publication-ready charts and plots programmatically.</p>
+      <div class="endpoint">POST /api/v1/visualization</div>
+    </div>
+    <div class="api-card">
+      <h4>Export</h4>
+      <p>Download results in CSV, Excel, JSON, or HTML report format.</p>
+      <div class="endpoint">POST /api/v1/export</div>
+    </div>
+  </div>
+</div>
+
+<!-- Pricing Section -->
+<div class="pricing" id="pricing">
+  <h2>Simple, Transparent Pricing</h2>
+  <p>Start free, upgrade when you need more</p>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <h3>Free</h3>
+      <p style="color:var(--dim);font-size:.9rem">Perfect for students and researchers</p>
+      <div class="price">$0<span>/month</span></div>
+      <ul class="features-list">
+        <li>Basic statistical tests</li>
+        <li>Simple visualizations</li>
+        <li>10 analyses per month</li>
+        <li>Community support</li>
+        <li>CSV export</li>
+      </ul>
+      <a href="https://github.com/MoKangMedical/Biostats" class="btn btn-ghost">Get Started</a>
+    </div>
+    <div class="price-card popular">
+      <h3>Pro</h3>
+      <p style="color:var(--dim);font-size:.9rem">For professional researchers</p>
+      <div class="price">$99<span>/month</span></div>
+      <ul class="features-list">
+        <li>All statistical tests</li>
+        <li>Advanced visualizations</li>
+        <li>Unlimited analyses</li>
+        <li>AI interpretations</li>
+        <li>Publication-ready exports</li>
+        <li>Priority support</li>
+        <li>API access</li>
+      </ul>
+      <a href="#" class="btn btn-primary">Start Free Trial</a>
+    </div>
+    <div class="price-card">
+      <h3>Enterprise</h3>
+      <p style="color:var(--dim);font-size:.9rem">For teams and organizations</p>
+      <div class="price">$499<span>/month</span></div>
+      <ul class="features-list">
+        <li>Everything in Pro</li>
+        <li>Multi-user collaboration</li>
+        <li>Custom branding</li>
+        <li>Dedicated support</li>
+        <li>Training sessions</li>
+        <li>SLA guarantee</li>
+        <li>On-premise deployment</li>
+      </ul>
+      <a href="#" class="btn btn-ghost">Contact Sales</a>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>Biostats — Built with ❤️ by <a href="https://github.com/MoKangMedical">MoKangMedical</a></p>
+  <p style="margin-top:.5rem">
+    <a href="https://github.com/MoKangMedical/Biostats">GitHub</a> · 
+    <a href="https://github.com/MoKangMedical/Biostats/tree/main/backend">API Docs</a> · 
+    <a href="#pricing">Pricing</a>
+  </p>
+</footer>
+
+</body>
+</html>

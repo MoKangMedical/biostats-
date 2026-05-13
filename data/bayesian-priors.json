@@ -1,0 +1,134 @@
+[
+  {
+    "id": "PRIOR-001",
+    "name": "正态均值的先验",
+    "parameter": "μ (总体均值)",
+    "scenario": "血压研究中总体均值的先验",
+    "prior_options": {
+      "non_informative": {"type": "flat", "distribution": "Uniform(-∞, +∞)", "description": "无信息先验，让数据说话"},
+      "weakly_informative": {"type": "normal", "distribution": "N(120, 50²)", "description": "弱信息先验，假设均值在120mmHg附近"},
+      "informative": {"type": "normal", "distribution": "N(130, 10²)", "description": "基于既往研究的强信息先验"}
+    },
+    "sensitivity_analysis": "比较不同先验下的后验推断",
+    "recommendation": "弱信息先验通常是最安全的选择"
+  },
+  {
+    "id": "PRIOR-002",
+    "name": "二项比例的先验",
+    "parameter": "π (成功概率)",
+    "scenario": "临床试验中治疗有效率",
+    "prior_options": {
+      "jeffreys": {"type": "Beta", "distribution": "Beta(0.5, 0.5)", "description": "Jeffreys无信息先验"},
+      "uniform": {"type": "Beta", "distribution": "Beta(1, 1)", "description": "均匀先验"},
+      "informative": {"type": "Beta", "distribution": "Beta(30, 70)", "description": "基于历史数据，预期有效率30%"}
+    },
+    "conjugate_update": {
+      "formula": "若 X|π ~ Bin(n,π), π ~ Beta(a,b), 则 π|X ~ Beta(a+X, b+n-X)",
+      "example": {
+        "prior": "Beta(30, 70)",
+        "data": "n=100, x=35",
+        "posterior": "Beta(65, 135)",
+        "posterior_mean": 0.325,
+        "posterior_95_CI": [0.265, 0.388]
+      }
+    }
+  },
+  {
+    "id": "PRIOR-003",
+    "name": "回归系数的先验",
+    "parameter": "β (回归系数)",
+    "scenario": "Logistic回归中的系数先验",
+    "prior_options": {
+      "flat": {"type": "normal", "distribution": "N(0, 1000²)", "description": "极大方差的弱信息先验"},
+      "regularized": {"type": "normal", "distribution": "N(0, 2.5²)", "description": "正则化先验，防止极端估计"},
+      "horseshoe": {"type": "horseshoe", "distribution": "Horseshoe(τ=1)", "description": "稀疏性先验，适用于变量选择"},
+      "lasso": {"type": "laplace", "distribution": "Laplace(0, λ)", "description": "Laplace先验等价于LASSO正则化"}
+    },
+    "recommendation": "对于预测模型，正则化先验通常效果更好"
+  },
+  {
+    "id": "PRIOR-004",
+    "name": "方差参数的先验",
+    "parameter": "σ² (方差) 或 τ (精度)",
+    "scenario": "层次模型中方差成分",
+    "prior_options": {
+      "inverse_gamma": {"type": "inverse_gamma", "distribution": "InvGamma(0.001, 0.001)", "description": "传统选择，但对小样本敏感"},
+      "half_cauchy": {"type": "half_cauchy", "distribution": "HalfCauchy(0, 25)", "description": "推荐的弱信息先验"},
+      "half_normal": {"type": "half_normal", "distribution": "HalfNormal(0, 10)", "description": "对零值有收缩作用"},
+      "exponential": {"type": "exponential", "distribution": "Exponential(1)", "description": "简约的弱信息先验"}
+    },
+    "recommendation": "Gelman推荐Half-Cauchy作为默认选择"
+  },
+  {
+    "id": "PRIOR-005",
+    "name": "生存分析的先验",
+    "parameter": "λ (风险率) 或 HR (风险比)",
+    "scenario": "贝叶斯Cox回归",
+    "prior_options": {
+      "baseline_hazard": {
+        "piecewise_constant": {"description": "分段常数风险率，每段使用Gamma先验"},
+        "weibull": {"description": "Weibull模型，形状参数和尺度参数的先验"}
+      },
+      "regression_coefficients": {
+        "normal": {"distribution": "N(0, 4²)", "description": "HR在exp(-8)到exp(8)范围内"},
+        "informative": {"distribution": "N(0.3, 0.5²)", "description": "基于meta分析的HR≈1.35"}
+      }
+    },
+    "example": {
+      "prior": "β ~ N(0, 4²)",
+      "data": "Weibull AFT, n=200, events=150",
+      "posterior_HR": 0.72,
+      "posterior_95_CI": [0.55, 0.94],
+      "prob_HR_less_than_1": 0.988
+    }
+  },
+  {
+    "id": "PRIOR-006",
+    "name": "Meta分析的先验",
+    "parameter": "μ (合并效应) 和 τ² (异质性方差)",
+    "scenario": "随机效应meta分析",
+    "prior_options": {
+      "effect_size": {
+        "vague": {"distribution": "N(0, 100²)", "description": "极大方差弱信息先验"},
+        "skeptical": {"distribution": "N(0, 0.5²)", "description": "怀疑性先验，预期效应量较小"},
+        "enthusiastic": {"distribution": "N(0.5, 0.5²)", "description": "乐观性先验"}
+      },
+      "heterogeneity": {
+        "uniform": {"distribution": "Uniform(0, 5)", "description": "τ的均匀先验"},
+        "half_normal": {"distribution": "HalfNormal(0, 0.5)", "description": "弱信息先验"},
+        "log_normal": {"distribution": "LogNormal(-2, 1)", "description": "倾向于小异质性的先验"}
+      }
+    },
+    "example": {
+      "studies": 10,
+      "pooled_effect": 0.35,
+      "pooled_95_CI": [0.18, 0.52],
+      "tau_squared": 0.045,
+      "I_squared": 0.62,
+      "prob_effect_positive": 0.999
+    }
+  },
+  {
+    "id": "PRIOR-007",
+    "name": "临床试验中的信息借用",
+    "parameter": "借用历史对照数据",
+    "scenario": "贝叶斯自适应试验设计",
+    "methods": {
+      "power_prior": {"description": "π(θ|D₀^α) ∝ L(θ|D₀^α) × π₀(θ), α∈[0,1]控制借用强度"},
+      "commensurate_prior": {"description": "当前参数与历史参数的差异使用弱信息先验"},
+      "robust_mixture": {"description": "混合先验：w×历史后验 + (1-w)×弱信息先验"}
+    },
+    "advantages": [
+      "减少所需样本量",
+      "允许不一致性检测",
+      "保持I类错误率控制"
+    ],
+    "example": {
+      "historical_control": {"n": 200, "event_rate": 0.25},
+      "current_trial": {"n": 100, "event_rate": 0.18},
+      "borrowing_factor": 0.65,
+      "adjusted_estimate": 0.20,
+      "interpretation": "有效借用约65%的历史数据信息"
+    }
+  }
+]

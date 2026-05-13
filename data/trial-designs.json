@@ -1,0 +1,10 @@
+[
+  {"id":"parallel_rct","name":"平行随机对照试验","name_en":"Parallel RCT","description":"两组同时进行，随机分配","use_case":"新药vs安慰剂/标准治疗","sample_size_formula":"n = 2(Zα/2+Zβ)²σ²/δ²","advantages":["简单","因果推断强"],"limitations":["样本量大","伦理限制"]},
+  {"id":"crossover","name":"交叉设计","name_en":"Crossover design","description":"每个受试者接受两种处理","use_case":"慢性病治疗比较","sample_size_formula":"n = 2(Zα/2+Zβ)²σ²_w/δ²","advantages":["样本量小","控制个体差异"],"limitations":["carryover效应","周期长"]},
+  {"id":"adaptive","name":"适应性设计","name_en":"Adaptive design","description":"中期分析后可调整方案","use_case":"II/III期临床试验","sample_size_formula":"取决于适应性规则","advantages":["灵活","效率高"],"limitations":["复杂","统计偏倚风险"]},
+  {"id":"basket","name":"篮式试验","name_en":"Basket trial","description":"按生物标志物而非瘤种入组","use_case":"精准肿瘤学","sample_size_formula":"贝叶斯设计","advantages":["跨瘤种","精准匹配"],"limitations":"样本量估算复杂"},
+  {"id":"umbrella","name":"伞式试验","name_en":"Umbrella trial","description":"同一疾病多个靶向治疗","use_case":"多驱动基因肿瘤","sample_size_formula":"各臂独立设计","advantages":["效率高","共享对照"],"limitations":"多重比较"},
+  {"id":"non_inferiority","name":"非劣效试验","name_en":"Non-inferiority","description":"证明新疗法不比标准差太多","use_case":"安全性更好的替代方案","sample_size_formula":"n = 2(Zα+Zβ)²σ²/Δ²","advantages":["伦理友好"],"limitations":"非劣效界值选择主观"},
+  {"id":"stepped_wedge","name":"阶梯楔形设计","name_en":"Stepped wedge","description":"集群随机，逐步干预","use_case":"公共卫生干预","sample_size_formula":"复杂，需ICC","advantages":["伦理接受度高"],"limitations":"时间效应"},
+  {"id":"dose_finding","name":"剂量探索设计","name_en":"Dose-finding","description":"确定最大耐受剂量","use_case":"I期临床试验","sample_size_formula":"3+3/CRM/BOIN","advantages":"安全性优先","limitations":"疗效信息少"}
+]

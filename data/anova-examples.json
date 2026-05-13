@@ -1,0 +1,134 @@
+[
+  {
+    "id": "ANOVA-001",
+    "name": "单因素ANOVA",
+    "type": "one_way",
+    "description": "三种降压药的降压效果比较",
+    "factors": ["药物类型（A/B/C）"],
+    "response": {"name": "收缩压下降值", "unit": "mmHg"},
+    "data_summary": {
+      "group_A": {"n": 30, "mean": 12.5, "sd": 4.2},
+      "group_B": {"n": 30, "mean": 15.8, "sd": 3.9},
+      "group_C": {"n": 30, "mean": 11.2, "sd": 4.5}
+    },
+    "anova_table": {
+      "between_groups": {"SS": 324.5, "df": 2, "MS": 162.25, "F": 9.12, "p": "<0.001"},
+      "within_groups": {"SS": 1548.6, "df": 87, "MS": 17.80},
+      "total": {"SS": 1873.1, "df": 89}
+    },
+    "post_hoc": {
+      "method": "Tukey HSD",
+      "comparisons": [
+        {"pair": "A vs B", "diff": -3.3, "p_adj": 0.002, "CI_95": [-5.4, -1.2]},
+        {"pair": "A vs C", "diff": 1.3, "p_adj": 0.35, "CI_95": [-0.8, 3.4]},
+        {"pair": "B vs C", "diff": 4.6, "p_adj": "<0.001", "CI_95": [2.5, 6.7]}
+      ]
+    },
+    "assumptions": {
+      "normality_shapiro_p": 0.15,
+      "levene_p": 0.42,
+      "conclusion": "假设满足"
+    }
+  },
+  {
+    "id": "ANOVA-002",
+    "name": "双因素ANOVA",
+    "type": "two_way",
+    "description": "药物类型和性别对疗效的交互作用",
+    "factors": ["药物类型（A/B）", "性别（男/女）"],
+    "response": {"name": "症状改善评分", "unit": "分"},
+    "data_summary": {
+      "A_male": {"n": 25, "mean": 65.2, "sd": 12.1},
+      "A_female": {"n": 25, "mean": 72.8, "sd": 11.5},
+      "B_male": {"n": 25, "mean": 70.5, "sd": 10.8},
+      "B_female": {"n": 25, "mean": 68.3, "sd": 13.2}
+    },
+    "anova_table": {
+      "drug": {"SS": 125.4, "df": 1, "MS": 125.4, "F": 1.02, "p": 0.315},
+      "sex": {"SS": 45.2, "df": 1, "MS": 45.2, "F": 0.37, "p": 0.546},
+      "interaction": {"SS": 892.6, "df": 1, "MS": 892.6, "F": 7.26, "p": 0.009},
+      "residual": {"SS": 11544.0, "df": 94, "MS": 122.8}
+    },
+    "interaction_interpretation": "药物疗效存在性别差异：药物A对女性更优，药物B对男性更优"
+  },
+  {
+    "id": "ANOVA-003",
+    "name": "重复测量ANOVA",
+    "type": "repeated_measures",
+    "description": "治疗前后不同时间点的疼痛评分",
+    "factors": ["时间（基线/4周/8周/12周）"],
+    "response": {"name": "VAS疼痛评分", "unit": "分"},
+    "subjects": 40,
+    "data_summary": {
+      "baseline": {"mean": 7.2, "sd": 1.5},
+      "week4": {"mean": 5.8, "sd": 1.8},
+      "week8": {"mean": 4.1, "sd": 2.0},
+      "week12": {"mean": 3.2, "sd": 1.9}
+    },
+    "anova_table": {
+      "time": {"SS": 456.3, "df": 3, "MS": 152.1, "F": 42.8, "p": "<0.001", "GG_epsilon": 0.78},
+      "subjects": {"SS": 189.2, "df": 39, "MS": 4.85},
+      "residual": {"SS": 416.4, "df": 117, "MS": 3.56}
+    },
+    "sphericity": {
+      "mauchly_p": 0.02,
+      "correction": "Greenhouse-Geisser",
+      "corrected_p": "<0.001"
+    },
+    "pairwise_comparisons": [
+      {"pair": "baseline vs week12", "mean_diff": 4.0, "p_adj": "<0.001"},
+      {"pair": "week4 vs week12", "mean_diff": 2.6, "p_adj": "<0.001"},
+      {"pair": "week8 vs week12", "mean_diff": 0.9, "p_adj": 0.03"}
+    ]
+  },
+  {
+    "id": "ANOVA-004",
+    "name": "ANCOVA",
+    "type": "ancova",
+    "description": "校正基线后两组治疗效果比较",
+    "factors": ["治疗组（新药/对照）"],
+    "covariate": {"name": "基线评分", "unit": "分"},
+    "response": {"name": "治疗后评分", "unit": "分"},
+    "data_summary": {
+      "new_drug": {"n": 50, "adjusted_mean": 28.5, "se": 1.2},
+      "control": {"n": 50, "adjusted_mean": 34.2, "se": 1.2}
+    },
+    "ancova_table": {
+      "treatment": {"SS": 812.5, "df": 1, "MS": 812.5, "F": 56.3, "p": "<0.001"},
+      "baseline": {"SS": 2456.8, "df": 1, "MS": 2456.8, "F": 170.2, "p": "<0.001"},
+      "residual": {"SS": 1398.4, "df": 97, "MS": 14.4}
+    },
+    "assumptions": {
+      "homogeneity_of_slopes_p": 0.45,
+      "conclusion": "回归斜率齐性满足，ANCOVA适用"
+    },
+    "interpretation": "校正基线后，新药组较对照组改善5.7分(p<0.001)"
+  },
+  {
+    "id": "ANOVA-005",
+    "name": "Kruskal-Wallis检验",
+    "type": "kruskal_wallis",
+    "description": "非正态数据的多组比较（住院天数）",
+    "factors": ["手术类型（A/B/C）"],
+    "response": {"name": "住院天数", "unit": "天"},
+    "data_summary": {
+      "surgery_A": {"n": 35, "median": 5, "IQR": [3, 8]},
+      "surgery_B": {"n": 35, "median": 7, "IQR": [5, 11]},
+      "surgery_C": {"n": 35, "median": 4, "IQR": [3, 6]}
+    },
+    "test_result": {
+      "H_statistic": 15.82,
+      "df": 2,
+      "p_value": "<0.001"
+    },
+    "post_hoc": {
+      "method": "Dunn's test with Bonferroni correction",
+      "comparisons": [
+        {"pair": "A vs B", "p_adj": 0.008},
+        {"pair": "A vs C", "p_adj": 0.45},
+        {"pair": "B vs C", "p_adj": "<0.001"}
+      ]
+    },
+    "interpretation": "手术C住院时间最短，显著优于手术B"
+  }
+]

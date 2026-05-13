@@ -1,0 +1,139 @@
+[
+  {
+    "id": "SURV-001",
+    "name": "肺癌生存分析",
+    "description": "晚期非小细胞肺癌患者生存数据",
+    "sample_size": 200,
+    "events": 156,
+    "censored": 44,
+    "censoring_rate": 0.22,
+    "median_follow_up": 18,
+    "time_unit": "月",
+    "survival_estimates": {
+      "method": "Kaplan-Meier",
+      "time_points": [0, 3, 6, 9, 12, 18, 24, 36],
+      "survival_probability": [1.00, 0.85, 0.68, 0.55, 0.45, 0.32, 0.24, 0.15],
+      "se": [0, 0.025, 0.033, 0.035, 0.035, 0.033, 0.030, 0.026],
+      "median_survival": 10.5,
+      "median_ci_95": [8.8, 12.2]
+    },
+    "groups": {
+      "chemo": {"n": 100, "median": 8.5, "events": 82},
+      "targeted": {"n": 100, "median": 14.2, "events": 74}
+    },
+    "log_rank_test": {
+      "chi_square": 12.45,
+      "df": 1,
+      "p_value": "<0.001"
+    },
+    "cox_model": {
+      "hazard_ratio": 0.62,
+      "hr_ci_95": [0.47, 0.82],
+      "p_value": "0.001",
+      "interpretation": "靶向治疗较化疗降低38%死亡风险"
+    }
+  },
+  {
+    "id": "SURV-002",
+    "name": "心梗后生存分析",
+    "description": "急性心肌梗死后患者长期随访",
+    "sample_size": 500,
+    "events": 185,
+    "censored": 315,
+    "censoring_rate": 0.63,
+    "median_follow_up": 36,
+    "time_unit": "月",
+    "survival_estimates": {
+      "method": "Kaplan-Meier",
+      "time_points": [0, 6, 12, 24, 36, 48, 60],
+      "survival_probability": [1.00, 0.92, 0.88, 0.82, 0.78, 0.74, 0.71],
+      "se": [0, 0.012, 0.015, 0.017, 0.019, 0.020, 0.021],
+      "median_survival": null,
+      "median_ci_95": null,
+      "note": "中位生存时间未达到"
+    },
+    "risk_factors": {
+      "cox_model": {
+        "age": {"HR": 1.03, "CI": [1.01, 1.05], "p": "<0.001"},
+        "lvef": {"HR": 0.97, "CI": [0.95, 0.99], "p": "0.002"},
+        "diabetes": {"HR": 1.45, "CI": [1.05, 2.00], "p": "0.024"},
+        "killip_class": {"HR": 1.38, "CI": [1.12, 1.70], "p": "0.002"}
+      }
+    }
+  },
+  {
+    "id": "SURV-003",
+    "name": "竞争风险分析",
+    "description": "人工关节置换术后假体翻修",
+    "sample_size": 350,
+    "events_primary": 28,
+    "events_competing": 45,
+    "censored": 277,
+    "time_unit": "年",
+    "competing_risks": ["假体翻修", "死亡（未翻修）"],
+    "cumulative_incidence": {
+      "time_points": [0, 1, 2, 5, 10],
+      "revision": [0, 0.01, 0.03, 0.06, 0.09],
+      "death": [0, 0.02, 0.04, 0.08, 0.15]
+    },
+    "gray_test": {
+      "chi_square": 3.82,
+      "df": 1,
+      "p_value": 0.051
+    },
+    "fine_gray_model": {
+      "subdistribution_HR": 1.52,
+      "CI_95": [0.98, 2.36],
+      "p_value": "0.062",
+      "interpretation": "翻修风险边缘显著"
+    }
+  },
+  {
+    "id": "SURV-004",
+    "name": "加速失效时间模型",
+    "description": "与Cox模型对比的AFT分析",
+    "sample_size": 300,
+    "events": 210,
+    "time_unit": "月",
+    "model_comparison": {
+      "cox": {
+        "HR": 0.55,
+        "CI_95": [0.42, 0.72],
+        "p": "<0.001",
+        "concordance": 0.68
+      },
+      "aft_weibull": {
+        "time_ratio": 1.78,
+        "CI_95": [1.42, 2.24],
+        "p": "<0.001",
+        "AIC": 1245
+      },
+      "aft_lognormal": {
+        "time_ratio": 1.82,
+        "CI_95": [1.38, 2.40],
+        "p": "<0.001",
+        "AIC": 1238
+      }
+    },
+    "interpretation": "AFT模型显示治疗组生存时间延长78-82%"
+  },
+  {
+    "id": "SURV-005",
+    "name": "时依协变量分析",
+    "description": "移植后免疫抑制剂变化的时依效应",
+    "sample_size": 250,
+    "events": 125,
+    "time_unit": "年",
+    "time_dependent_covariate": "免疫抑制方案变更",
+    "split_method": "counting process",
+    "intervals": [
+      {"period": "0-1年", "HR": 0.82, "CI": [0.55, 1.22], "p": 0.33},
+      {"period": "1-3年", "HR": 1.45, "CI": [1.02, 2.06], "p": 0.04},
+      {"period": ">3年", "HR": 1.12, "CI": [0.78, 1.60], "p": 0.54}
+    ],
+    "test_for_time_interaction": {
+      "global_p": 0.038,
+      "interpretation": "免疫抑制方案变更的效应随时间变化"
+    }
+  }
+]

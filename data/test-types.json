@@ -1,0 +1,14 @@
+[
+  {"id":"t_test","name":"t检验","name_en":"t-test","category":"parametric","use_case":"两组均数比较","assumptions":["正态分布","方差齐性","独立样本"],"types":["单样本t检验","独立样本t检验","配对t检验"],"formula":"t = (X̄₁ - X̄₂) / (s_p × √(1/n₁ + 1/n₂))"},
+  {"id":"chi_square","name":"卡方检验","name_en":"Chi-square test","category":"non_parametric","use_case":"分类变量关联性","assumptions":["期望频数≥5","独立观测"],"types":["Pearson卡方","Fisher精确检验","McNemar检验"],"formula":"χ² = Σ(O-E)²/E"},
+  {"id":"anova","name":"方差分析","name_en":"ANOVA","category":"parametric","use_case":"多组均数比较","assumptions":["正态分布","方差齐性","独立样本"],"types":["单因素ANOVA","双因素ANOVA","重复测量ANOVA"],"formula":"F = MS_between / MS_within"},
+  {"id":"mann_whitney","name":"Mann-Whitney U检验","name_en":"Mann-Whitney U","category":"non_parametric","use_case":"两组秩次比较","assumptions":["独立样本","有序数据"],"types":["单侧","双侧"],"formula":"U = n₁n₂ + n₁(n₁+1)/2 - R₁"},
+  {"id":"wilcoxon","name":"Wilcoxon符号秩检验","name_en":"Wilcoxon signed-rank","category":"non_parametric","use_case":"配对样本秩次比较","assumptions":["配对设计","对称分布"],"types":["单侧","双侧"],"formula":"W = Σ(sign × rank)"},
+  {"id":"kruskal_wallis","name":"Kruskal-Wallis检验","name_en":"Kruskal-Wallis","category":"non_parametric","use_case":"多组秩次比较","assumptions":["独立样本","有序数据"],"types":["单因素"],"formula":"H = 12/(N(N+1)) × ΣRi²/ni - 3(N+1)"},
+  {"id":"pearson_correlation","name":"Pearson相关","name_en":"Pearson correlation","category":"parametric","use_case":"线性相关性","assumptions":["正态分布","线性关系","连续变量"],"types":["正相关","负相关","无相关"],"formula":"r = Σ(x-x̄)(y-ȳ) / √[Σ(x-x̄)²Σ(y-ȳ)²]"},
+  {"id":"spearman_correlation","name":"Spearman秩相关","name_en":"Spearman correlation","category":"non_parametric","use_case":"单调相关性","assumptions":["有序数据","单调关系"],"types":["正相关","负相关"],"formula":"rs = 1 - 6Σdi²/(n(n²-1))"},
+  {"id":"logistic_regression","name":"Logistic回归","name_en":"Logistic regression","category":"regression","use_case":"二分类结局预测","assumptions":["独立观测","线性logit","无多重共线性"],"types":["二元","多元","条件"],"formula":"log(p/(1-p)) = β₀ + β₁x₁ + ... + βₖxₖ"},
+  {"id":"cox_regression","name":"Cox回归","name_en":"Cox regression","category":"survival","use_case":"生存分析","assumptions":["比例风险","独立删失"],"types":["单因素","多因素","时依协变量"],"formula":"h(t) = h₀(t)exp(β₁x₁ + ... + βₖxₖ)"},
+  {"id":"kaplan_meier","name":"Kaplan-Meier法","name_en":"Kaplan-Meier","category":"survival","use_case":"生存曲线估计","assumptions":["独立删失","随机删失"],"types":["生存函数","中位生存时间"],"formula":"S(t) = Π(ti≤t)(1-di/ni)"},
+  {"id":"fisher_exact","name":"Fisher精确检验","name_en":"Fisher exact test","category":"non_parametric","use_case":"小样本分类变量","assumptions":["固定边际","超几何分布"],"types":["单侧","双侧"],"formula":"p = (a+b)!(c+d)!(a+c)!(b+d)!/(n!a!b!c!d!)"}
+]

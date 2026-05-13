@@ -1,0 +1,202 @@
+[
+  {
+    "id": "RCT-001",
+    "name": "PARADIGM-HF",
+    "type": "随机对照试验",
+    "phase": "III",
+    "condition": "心力衰竭",
+    "intervention": "沙库巴曲缬沙坦 vs 依那普利",
+    "design": "双盲、活性对照、平行组",
+    "sample_size": 8442,
+    "primary_endpoint": "心血管死亡或心衰住院",
+    "randomization_ratio": "1:1",
+    "follow_up_months": 27,
+    "results": {
+      "hazard_ratio": 0.80,
+      "ci_95": [0.73, 0.87],
+      "p_value": "<0.001",
+      "nnt": 21,
+      "conclusion": "沙库巴曲缬沙坦显著优于依那普利"
+    }
+  },
+  {
+    "id": "RCT-002",
+    "name": "SPRINT",
+    "type": "随机对照试验",
+    "phase": "IV",
+    "condition": "高血压",
+    "intervention": "强化降压(目标SBP<120) vs 标准降压(目标SBP<140)",
+    "design": "开放标签、平行组",
+    "sample_size": 9361,
+    "primary_endpoint": "主要心血管事件复合终点",
+    "randomization_ratio": "1:1",
+    "follow_up_months": 36,
+    "results": {
+      "hazard_ratio": 0.75,
+      "ci_95": [0.64, 0.89],
+      "p_value": "<0.001",
+      "nnt": 61,
+      "conclusion": "强化降压显著降低心血管事件风险"
+    }
+  },
+  {
+    "id": "RCT-003",
+    "name": "HOPE-3",
+    "type": "随机对照试验",
+    "phase": "III",
+    "condition": "心血管风险一级预防",
+    "intervention": "瑞舒伐他汀+坎地沙坦/氢氯噻嗪 vs 安慰剂",
+    "design": "双盲、2×2析因设计",
+    "sample_size": 12705,
+    "primary_endpoint": "心血管死亡、心肌梗死、卒中复合终点",
+    "randomization_ratio": "1:1:1:1",
+    "follow_up_months": 56,
+    "results": {
+      "hazard_ratio": 0.71,
+      "ci_95": [0.56, 0.90],
+      "p_value": "0.005",
+      "nnt": 91,
+      "conclusion": "中危人群中等剂量他汀显著获益"
+    }
+  },
+  {
+    "id": "RCT-004",
+    "name": "DAPA-HF",
+    "type": "随机对照试验",
+    "phase": "III",
+    "condition": "射血分数降低的心力衰竭",
+    "intervention": "达格列净 vs 安慰剂",
+    "design": "双盲、平行组",
+    "sample_size": 4744,
+    "primary_endpoint": "心衰恶化或心血管死亡",
+    "randomization_ratio": "1:1",
+    "follow_up_months": 18,
+    "results": {
+      "hazard_ratio": 0.74,
+      "ci_95": [0.65, 0.85],
+      "p_value": "<0.001",
+      "nnt": 21,
+      "conclusion": "达格列净在标准治疗基础上进一步降低心衰事件"
+    }
+  },
+  {
+    "id": "RCT-005",
+    "name": "COMPASS",
+    "type": "随机对照试验",
+    "phase": "III",
+    "condition": "稳定性冠心病/外周动脉疾病",
+    "intervention": "利伐沙班+阿司匹林 vs 阿司匹林单药",
+    "design": "双盲、平行组",
+    "sample_size": 27395,
+    "primary_endpoint": "心血管死亡、心肌梗死、卒中",
+    "randomization_ratio": "1:1:1",
+    "follow_up_months": 23,
+    "results": {
+      "hazard_ratio": 0.76,
+      "ci_95": [0.66, 0.86],
+      "p_value": "<0.001",
+      "nnt": 84,
+      "conclusion": "低剂量利伐沙班联合阿司匹林优于单药阿司匹林"
+    }
+  },
+  {
+    "id": "RCT-006",
+    "name": "ATLAS ACS 2-TIMI 51",
+    "type": "随机对照试验",
+    "phase": "III",
+    "condition": "急性冠脉综合征",
+    "intervention": "利伐沙班 2.5mg/5mg bid vs 安慰剂",
+    "design": "双盲、平行组",
+    "sample_size": 15526,
+    "primary_endpoint": "心血管死亡、心肌梗死、卒中",
+    "randomization_ratio": "1:1:1",
+    "follow_up_months": 13,
+    "results": {
+      "hazard_ratio": 0.84,
+      "ci_95": [0.72, 0.97],
+      "p_value": "0.02",
+      "nnt": 56,
+      "conclusion": "低剂量利伐沙班降低ACS后心血管事件"
+    }
+  },
+  {
+    "id": "RCT-007",
+    "name": "LEADER",
+    "type": "随机对照试验",
+    "phase": "III",
+    "condition": "2型糖尿病",
+    "intervention": "利拉鲁肽 vs 安慰剂",
+    "design": "双盲、平行组",
+    "sample_size": 9340,
+    "primary_endpoint": "主要心血管事件复合终点",
+    "randomization_ratio": "1:1",
+    "follow_up_months": 46,
+    "results": {
+      "hazard_ratio": 0.87,
+      "ci_95": [0.78, 0.97],
+      "p_value": "0.01",
+      "nnt": 66,
+      "conclusion": "利拉鲁肽显著降低2型糖尿病患者心血管风险"
+    }
+  },
+  {
+    "id": "RCT-008",
+    "name": "CREDENCE",
+    "type": "随机对照试验",
+    "phase": "III",
+    "condition": "2型糖尿病肾病",
+    "intervention": "卡格列净 vs 安慰剂",
+    "design": "双盲、平行组",
+    "sample_size": 4401,
+    "primary_endpoint": "终末期肾病、肌酐倍增、肾脏或心血管死亡",
+    "randomization_ratio": "1:1",
+    "follow_up_months": 31,
+    "results": {
+      "hazard_ratio": 0.70,
+      "ci_95": [0.59, 0.82],
+      "p_value": "<0.001",
+      "nnt": 28,
+      "conclusion": "卡格列净显著降低糖尿病肾病进展风险"
+    }
+  },
+  {
+    "id": "RCT-009",
+    "name": "POET",
+    "type": "随机对照试验",
+    "phase": "IV",
+    "condition": "感染性心内膜炎",
+    "intervention": "口服序贯治疗 vs 全程静脉抗生素",
+    "design": "开放标签、非劣效性",
+    "sample_size": 400,
+    "primary_endpoint": "全因死亡、非计划手术、栓塞事件、复发",
+    "randomization_ratio": "1:1",
+    "follow_up_months": 6,
+    "results": {
+      "hazard_ratio": 0.90,
+      "ci_95": [0.64, 1.28],
+      "p_value": "0.56",
+      "nnt": null,
+      "conclusion": "口服序贯治疗非劣于全程静脉治疗"
+    }
+  },
+  {
+    "id": "RCT-010",
+    "name": "ADRENAL",
+    "type": "随机对照试验",
+    "phase": "III",
+    "condition": "脓毒性休克",
+    "intervention": "氢化可的松 vs 安慰剂",
+    "design": "双盲、平行组",
+    "sample_size": 3658,
+    "primary_endpoint": "90天全因死亡率",
+    "randomization_ratio": "1:1",
+    "follow_up_months": 3,
+    "results": {
+      "hazard_ratio": 0.95,
+      "ci_95": [0.82, 1.10],
+      "p_value": "0.50",
+      "nnt": null,
+      "conclusion": "氢化可的松未显著降低脓毒性休克90天死亡率"
+    }
+  }
+]

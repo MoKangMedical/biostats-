@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# R
+.Rhistory
+.RData
+.Ruserdata
+
+# Docker
+docker-compose.override.yml
+
+# Uploads / user data
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Logs
+*.log
+logs/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Test coverage
+htmlcov/
+.coverage
+.coverage.*
+
+# Deployment
+*.pem
+*.key

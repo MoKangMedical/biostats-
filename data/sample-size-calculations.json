@@ -1,0 +1,128 @@
+[
+  {
+    "id": "SS-001",
+    "name": "两组均数比较",
+    "test_type": "t-test (two-sample)",
+    "formula": "n = 2*(Z_α/2 + Z_β)² * σ² / δ²",
+    "parameters": {
+      "alpha": 0.05,
+      "power": 0.80,
+      "effect_size_d": 0.5,
+      "sigma": 10,
+      "delta": 5
+    },
+    "result_per_group": 64,
+    "total_n": 128,
+    "notes": "中等效应量(Cohen's d=0.5)"
+  },
+  {
+    "id": "SS-002",
+    "name": "两组率比较",
+    "test_type": "chi-square test for proportions",
+    "formula": "n = (Z_α/2 + Z_β)² * [p1(1-p1) + p2(1-p2)] / (p1-p2)²",
+    "parameters": {
+      "alpha": 0.05,
+      "power": 0.80,
+      "p1": 0.30,
+      "p2": 0.20,
+      "allocation_ratio": 1
+    },
+    "result_per_group": 294,
+    "total_n": 588,
+    "notes": "绝对差异10%的两组率比较"
+  },
+  {
+    "id": "SS-003",
+    "name": "非劣效性试验",
+    "test_type": "non-inferiority test",
+    "formula": "n = 2*(Z_α + Z_β)² * σ² / (δ - Δ)²",
+    "parameters": {
+      "alpha": 0.025,
+      "power": 0.80,
+      "sigma": 15,
+      "non_inferiority_margin": 5,
+      "expected_difference": 0
+    },
+    "result_per_group": 142,
+    "total_n": 284,
+    "notes": "单侧检验，非劣效界值5"
+  },
+  {
+    "id": "SS-004",
+    "name": "生存分析样本量",
+    "test_type": "log-rank test",
+    "formula": "N = 4*(Z_α/2 + Z_β)² / (ln(HR))²",
+    "parameters": {
+      "alpha": 0.05,
+      "power": 0.80,
+      "hazard_ratio": 0.70,
+      "median_survival_control": 24,
+      "median_survival_treatment": 34.3,
+      "enrollment_period_months": 24,
+      "follow_up_period_months": 12,
+      "dropout_rate": 0.10
+    },
+    "total_events": 314,
+    "total_n": 400,
+    "notes": "HR=0.70，需事件数驱动"
+  },
+  {
+    "id": "SS-005",
+    "name": "配对设计样本量",
+    "test_type": "paired t-test",
+    "formula": "n = (Z_α/2 + Z_β)² * σ_d² / δ²",
+    "parameters": {
+      "alpha": 0.05,
+      "power": 0.80,
+      "sigma_diff": 8,
+      "mean_diff": 3
+    },
+    "total_n": 45,
+    "notes": "配对差值的标准差8，期望差异3"
+  },
+  {
+    "id": "SS-006",
+    "name": "多组均数比较(ANOVA)",
+    "test_type": "one-way ANOVA",
+    "formula": "n_per_group = (Z_α + Z_β)² * σ² * k / (k * δ²)",
+    "parameters": {
+      "alpha": 0.05,
+      "power": 0.80,
+      "num_groups": 4,
+      "sigma": 12,
+      "max_mean_diff": 10,
+      "effect_size_f": 0.25
+    },
+    "result_per_group": 45,
+    "total_n": 180,
+    "notes": "4组，中等效应量(f=0.25)"
+  },
+  {
+    "id": "SS-007",
+    "name": "诊断试验灵敏度",
+    "test_type": "diagnostic test sensitivity",
+    "formula": "n = Z_α/2² * Se*(1-Se) / d²",
+    "parameters": {
+      "alpha": 0.05,
+      "expected_sensitivity": 0.90,
+      "precision_d": 0.05
+    },
+    "total_n": 139,
+    "notes": "预期灵敏度90%，精度±5%"
+  },
+  {
+    "id": "SS-008",
+    "name": "交叉设计样本量",
+    "test_type": "2x2 crossover",
+    "formula": "n = 2*(Z_α/2 + Z_β)² * σ_w² / δ²",
+    "parameters": {
+      "alpha": 0.05,
+      "power": 0.80,
+      "within_subject_sd": 10,
+      "mean_diff": 5,
+      "carryover_expected": false
+    },
+    "total_n": 32,
+    "notes": "交叉设计较平行设计更高效"
+  }
+]

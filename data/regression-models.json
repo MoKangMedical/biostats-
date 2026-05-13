@@ -1,0 +1,179 @@
+[
+  {
+    "id": "REG-001",
+    "name": "简单线性回归",
+    "type": "linear_regression",
+    "formula": "Y = β₀ + β₁X + ε",
+    "description": "血压与年龄的关系",
+    "variables": {
+      "dependent": {"name": "收缩压", "unit": "mmHg"},
+      "independent": {"name": "年龄", "unit": "岁"}
+    },
+    "coefficients": {
+      "intercept": {"estimate": 98.5, "se": 3.2, "t": 30.78, "p": "<0.001"},
+      "age": {"estimate": 0.65, "se": 0.05, "t": 13.0, "p": "<0.001"}
+    },
+    "model_fit": {
+      "r_squared": 0.42,
+      "adj_r_squared": 0.41,
+      "f_statistic": 169.0,
+      "p_value": "<0.001",
+      "residual_se": 12.3,
+      "df": 198
+    },
+    "interpretation": "年龄每增加1岁，收缩压平均增加0.65 mmHg"
+  },
+  {
+    "id": "REG-002",
+    "name": "多元线性回归",
+    "type": "multiple_linear_regression",
+    "formula": "Y = β₀ + β₁X₁ + β₂X₂ + β₃X₃ + ε",
+    "description": "BMI预测因素分析",
+    "variables": {
+      "dependent": {"name": "BMI", "unit": "kg/m²"},
+      "independent": [
+        {"name": "年龄", "unit": "岁"},
+        {"name": "热量摄入", "unit": "kcal/day"},
+        {"name": "体力活动", "unit": "MET-min/week"}
+      ]
+    },
+    "coefficients": {
+      "intercept": {"estimate": 18.2, "se": 1.5, "t": 12.13, "p": "<0.001"},
+      "age": {"estimate": 0.08, "se": 0.02, "t": 4.0, "p": "<0.001"},
+      "calories": {"estimate": 0.003, "se": 0.001, "t": 3.0, "p": "0.003"},
+      "activity": {"estimate": -0.005, "se": 0.002, "t": -2.5, "p": "0.013"}
+    },
+    "model_fit": {
+      "r_squared": 0.35,
+      "adj_r_squared": 0.34,
+      "f_statistic": 35.6,
+      "p_value": "<0.001",
+      "residual_se": 3.8,
+      "df": 296
+    },
+    "vif": {"age": 1.05, "calories": 1.12, "activity": 1.15},
+    "interpretation": "控制其他变量后，热量摄入增加100kcal/day，BMI增加0.3"
+  },
+  {
+    "id": "REG-003",
+    "name": "Logistic回归",
+    "type": "logistic_regression",
+    "formula": "log(p/(1-p)) = β₀ + β₁X₁ + β₂X₂",
+    "description": "糖尿病风险预测",
+    "variables": {
+      "dependent": {"name": "糖尿病", "type": "binary", "coding": "0=否, 1=是"},
+      "independent": [
+        {"name": "年龄", "unit": "岁"},
+        {"name": "BMI", "unit": "kg/m²"},
+        {"name": "家族史", "type": "binary", "coding": "0=无, 1=有"}
+      ]
+    },
+    "coefficients": {
+      "intercept": {"estimate": -6.2, "se": 0.8, "z": -7.75, "p": "<0.001", "OR": null},
+      "age": {"estimate": 0.04, "se": 0.01, "z": 4.0, "p": "<0.001", "OR": 1.04},
+      "bmi": {"estimate": 0.12, "se": 0.03, "z": 4.0, "p": "<0.001", "OR": 1.13},
+      "family_history": {"estimate": 0.85, "se": 0.2, "z": 4.25, "p": "<0.001", "OR": 2.34}
+    },
+    "model_fit": {
+      "auc": 0.78,
+      "hosmer_lemeshow_p": 0.35,
+      "nagelkerke_r2": 0.22,
+      "classification_accuracy": 0.72,
+      "sensitivity": 0.68,
+      "specificity": 0.75
+    },
+    "interpretation": "有家族史者糖尿病风险增加2.34倍(OR=2.34, 95%CI: 1.59-3.44)"
+  },
+  {
+    "id": "REG-004",
+    "name": "Cox比例风险回归",
+    "type": "cox_regression",
+    "formula": "h(t) = h₀(t) * exp(β₁X₁ + β₂X₂)",
+    "description": "心力衰竭预后因素",
+    "variables": {
+      "dependent": {"name": "生存时间", "unit": "月", "event": "全因死亡"},
+      "independent": [
+        {"name": "年龄", "unit": "岁"},
+        {"name": "LVEF", "unit": "%"},
+        {"name": "NYHA分级", "type": "ordinal", "coding": "II=1, III=2, IV=3"}
+      ]
+    },
+    "coefficients": {
+      "age": {"estimate": 0.03, "se": 0.008, "z": 3.75, "p": "<0.001", "HR": 1.03, "HR_CI": [1.01, 1.05]},
+      "lvef": {"estimate": -0.04, "se": 0.01, "z": -4.0, "p": "<0.001", "HR": 0.96, "HR_CI": [0.94, 0.98]},
+      "nyha": {"estimate": 0.65, "se": 0.12, "z": 5.42, "p": "<0.001", "HR": 1.92, "HR_CI": [1.52, 2.42]}
+    },
+    "model_fit": {
+      "concordance": 0.74,
+      "log_rank_p": "<0.001",
+      "schoenfeld_p": 0.18,
+      "events": 156,
+      "n": 520
+    },
+    "interpretation": "LVEF每降低1%，死亡风险增加4%(HR=1.04)"
+  },
+  {
+    "id": "REG-005",
+    "name": "Poisson回归",
+    "type": "poisson_regression",
+    "formula": "log(λ) = β₀ + β₁X₁ + β₂X₂",
+    "description": "医院感染次数的影响因素",
+    "variables": {
+      "dependent": {"name": "感染次数", "type": "count"},
+      "independent": [
+        {"name": "住院天数", "unit": "天"},
+        {"name": "有创操作", "type": "count"}
+      ]
+    },
+    "coefficients": {
+      "intercept": {"estimate": -2.1, "se": 0.3, "z": -7.0, "p": "<0.001", "IRR": null},
+      "los": {"estimate": 0.05, "se": 0.01, "z": 5.0, "p": "<0.001", "IRR": 1.05},
+      "procedures": {"estimate": 0.35, "se": 0.08, "z": 4.38, "p": "<0.001", "IRR": 1.42}
+    },
+    "model_fit": {
+      "deviance": 245.3,
+      "pearson_chi2": 238.7,
+      "dispersion": 0.97,
+      "aic": 512.6,
+      "overdispersion_test_p": 0.42
+    },
+    "interpretation": "每多一次有创操作，感染率增加42%(IRR=1.42)"
+  },
+  {
+    "id": "REG-006",
+    "name": "混合效应模型",
+    "type": "mixed_effects",
+    "formula": "Y_ij = β₀ + β₁X_ij + b₀i + b₁iX_ij + ε_ij",
+    "description": "纵向血压监测数据",
+    "variables": {
+      "dependent": {"name": "收缩压", "unit": "mmHg"},
+      "fixed_effects": [
+        {"name": "时间", "unit": "月"},
+        {"name": "治疗组", "type": "binary"}
+      ],
+      "random_effects": ["截距", "时间斜率"],
+      "grouping": "患者ID"
+    },
+    "coefficients": {
+      "fixed": {
+        "intercept": {"estimate": 145.2, "se": 2.1, "p": "<0.001"},
+        "time": {"estimate": -1.2, "se": 0.3, "p": "<0.001"},
+        "treatment": {"estimate": -8.5, "se": 1.8, "p": "<0.001"},
+        "time_treatment": {"estimate": -0.8, "se": 0.2, "p": "<0.001"}
+      },
+      "random": {
+        "intercept_variance": 125.3,
+        "time_variance": 2.1,
+        "residual_variance": 45.6,
+        "intercept_time_covariance": -3.2
+      }
+    },
+    "model_fit": {
+      "aic": 4521,
+      "bic": 4548,
+      "log_likelihood": -2254,
+      "icc": 0.73
+    },
+    "interpretation": "治疗组血压较对照组多降低8.5mmHg，且随时间效果增强"
+  }
+]

@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./data/biostats.db
+      - SECRET_KEY=${SECRET_KEY:-dev-secret-key}
+      - ENVIRONMENT=production
+    volumes:
+      - ./data:/app/data
+      - ./backend/uploads:/app/backend/uploads
+    restart: unless-stopped
+
+  # 可选：PostgreSQL（生产环境推荐）
+  # db:
+  #   image: postgres:16-alpine
+  #   environment:
+  #     POSTGRES_USER: biostats
+  #     POSTGRES_PASSWORD: ${DB_PASSWORD}
+  #     POSTGRES_DB: biostats
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+  #
+  # volumes:
+  #   pgdata:
