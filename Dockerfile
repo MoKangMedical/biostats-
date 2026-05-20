@@ -1,7 +1,7 @@
 # Biostats终结者 Dockerfile
 # 统一生物统计分析平台
 
-FROM python:3.12-slim
+FROM python:3.14-slim
 
 WORKDIR /app
 
