@@ -2,7 +2,7 @@
 # 生物统计AI分析平台
 
 # Web Framework
-fastapi>=0.110.0
+fastapi>=0.136.1
 uvicorn[standard]>=0.29.0
 
 # Data Science
