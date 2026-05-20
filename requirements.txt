@@ -44,7 +44,7 @@ python-dotenv>=1.0.0
 
 # Validation
 pydantic>=2.6.0
-pydantic-settings>=2.1.0
+pydantic-settings>=2.14.1
 
 # Testing
 pytest>=8.0.0
